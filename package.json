@@ -1,0 +1,19 @@
+{
+  "name": "chatkaro",
+  "version": "9.9.1",
+  "private": true,
+  "description": "Free online chat rooms — no registration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.1"
+  }
+}
