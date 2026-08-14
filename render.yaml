@@ -1,11 +1,11 @@
 services:
   - type: web
-    name: chatkaro
+    name: chatrooms
     runtime: node
     plan: free
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /health
-    scaling:
-      minInstances: 1
-      maxInstances: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
