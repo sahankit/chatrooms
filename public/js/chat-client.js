@@ -70,7 +70,7 @@
         </div>
         <div class="join-box">
           <div class="join-mark">c</div>
-          <p>Type a unique name and walk into the room. No signup. Names already on the site cannot be reused.</p>
+          <p>Pick a unique name and walk in. No signup. If someone already has that name, try another.</p>
           <p class="join-error" data-error></p>
           <form class="join-form">
             <input type="text" name="nick" maxlength="24" placeholder="Your name" autocomplete="nickname" />
