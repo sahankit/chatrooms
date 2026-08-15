@@ -9,3 +9,9 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: ADSENSE_CLIENT
+        sync: false
+      - key: ADSENSE_SLOT_TOP
+        sync: false
+      - key: ADSENSE_SLOT_BOTTOM
+        sync: false

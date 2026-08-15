@@ -6,6 +6,7 @@ const { getRoom, resolvePath, regions, rooms } = require("./lib/rooms");
 const pages = require("./lib/html");
 const { attachChat } = require("./lib/chat");
 const { sitemapXml, robotsTxt } = require("./lib/seo");
+const ads = require("./lib/adsense");
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
@@ -15,7 +16,12 @@ app.set("trust proxy", 1);
 app.use((req, _res, next) => {
   const proto = req.headers["x-forwarded-proto"] || req.protocol || "http";
   const host = req.get("host") || "localhost";
-  pages.configure({ siteUrl: process.env.SITE_URL || `${proto}://${host}` });
+  pages.configure({
+    siteUrl: process.env.SITE_URL || `${proto}://${host}`,
+    adsenseClient: process.env.ADSENSE_CLIENT || process.env.GOOGLE_ADSENSE_CLIENT,
+    adsenseSlotTop: process.env.ADSENSE_SLOT_TOP,
+    adsenseSlotBottom: process.env.ADSENSE_SLOT_BOTTOM
+  });
   req.siteUrl = process.env.SITE_URL || `${proto}://${host}`;
   next();
 });
@@ -27,6 +33,10 @@ app.get("/health", (_req, res) => {
 
 app.get("/robots.txt", (req, res) => {
   res.type("text/plain").send(robotsTxt(req.siteUrl));
+});
+
+app.get("/ads.txt", (_req, res) => {
+  res.type("text/plain").send(ads.adsTxt());
 });
 
 app.get("/sitemap.xml", (req, res) => {
