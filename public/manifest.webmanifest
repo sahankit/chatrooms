@@ -1,0 +1,19 @@
+{
+  "name": "chat — Free online chat rooms",
+  "short_name": "chat",
+  "description": "Free online chat rooms. No registration. 18+.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070b12",
+  "theme_color": "#070b12",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ const { WebSocketServer } = require("ws");
 const { getRoom, resolvePath, regions, rooms } = require("./lib/rooms");
 const pages = require("./lib/html");
 const { attachChat } = require("./lib/chat");
-const { sitemapXml, robotsTxt } = require("./lib/seo");
+const { sitemapXml, robotsTxt, rssFeed, llmsTxt, indexNowKey } = require("./lib/seo");
 const ads = require("./lib/adsense");
 
 const app = express();
@@ -25,6 +25,12 @@ app.use((req, _res, next) => {
   req.siteUrl = process.env.SITE_URL || `${proto}://${host}`;
   next();
 });
+app.use((req, res, next) => {
+  res.set("Content-Language", "en");
+  res.set("X-Content-Type-Options", "nosniff");
+  res.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  next();
+});
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/health", (_req, res) => {
@@ -40,7 +46,26 @@ app.get("/ads.txt", (_req, res) => {
 });
 
 app.get("/sitemap.xml", (req, res) => {
+  res.set("Cache-Control", "public, max-age=300");
   res.type("application/xml").send(sitemapXml(req.siteUrl, rooms));
+});
+
+app.get("/feed.xml", (req, res) => {
+  res.set("Cache-Control", "public, max-age=300");
+  res.type("application/rss+xml").send(rssFeed(req.siteUrl, rooms));
+});
+
+app.get("/llms.txt", (req, res) => {
+  res.type("text/plain").send(llmsTxt(req.siteUrl));
+});
+
+app.get("/indexnow-key.txt", (_req, res) => {
+  const key = indexNowKey();
+  if (!key) {
+    res.status(404).type("text/plain").send("INDEXNOW_KEY is not set");
+    return;
+  }
+  res.type("text/plain").send(key);
 });
 
 app.get("/", (_req, res) => {
@@ -115,6 +140,15 @@ app.get(["/deutschland-online-chat", "/deutschland-online-chat/"], (_req, res) =
 });
 app.get(["/worldwide", "/worldwide/"], (_req, res) => {
   res.redirect(301, "/global-chat-rooms/");
+});
+
+app.get("/:key.txt", (req, res, next) => {
+  const key = indexNowKey();
+  if (!key || req.params.key !== key) {
+    next();
+    return;
+  }
+  res.type("text/plain").send(key);
 });
 
 app.get("*", (req, res) => {

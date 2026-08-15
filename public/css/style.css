@@ -1630,3 +1630,26 @@ a:hover {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+.faq,
+.related {
+  margin-top: 48px;
+}
+
+.faq details {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin: 0 0 10px;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.faq details p {
+  margin: 10px 0 0;
+}

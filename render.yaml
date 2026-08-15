@@ -15,3 +15,11 @@ services:
         sync: false
       - key: ADSENSE_SLOT_BOTTOM
         sync: false
+      - key: GOOGLE_SITE_VERIFICATION
+        sync: false
+      - key: BING_SITE_VERIFICATION
+        sync: false
+      - key: YANDEX_VERIFICATION
+        sync: false
+      - key: INDEXNOW_KEY
+        sync: false
